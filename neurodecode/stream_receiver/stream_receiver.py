@@ -161,6 +161,17 @@ class StreamReceiver:
                         # OpenVibe standard unit is Volts, which is not ideal for some numerical computations
                         self.multiplier = 10**6 # change V -> uV unit for OpenVibe sources
                         break
+                    elif 'Explore' in amp_name:
+                        logger.info('Found an ExplorePy signal streaming server %s (type %s, amp_serial %s) @ %s.' % (amp_name, si.type(), amp_serial, si.hostname()))
+                        ch_list = pu.lsl_channel_list(inlet)
+                        self._lsl_tr_channel = None
+                        channels += si.channel_count()
+                        ch_list = ['Ch1', 'Ch2', 'Ch3', 'Ch4', 'Ch5', 'Ch6', 'Ch7', 'Ch8']
+                        amps.append(si)
+                        server_found = True
+                        # OpenVibe standard unit is Volts, which is not ideal for some numerical computations
+                        self.multiplier = 10**6 # change V -> uV unit for OpenVibe sources
+                        break
                     elif 'openvibeMarkers' in amp_name:
                         logger.info('Found an Openvibe markers server %s (type %s, amp_serial %s) @ %s.' % (amp_name, si.type(), amp_serial, si.hostname()))
                         ch_list = pu.lsl_channel_list(inlet)
