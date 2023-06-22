@@ -66,7 +66,7 @@ class StreamReceiver:
             buffer_size = self.winsec
         self.bufsec = buffer_size
         self.bufsize = 0 # to be calculated using sampling rate
-        self.stream_bufsec = int(math.ceil(min(_MAX_PYLSL_STREAM_BUFSIZE, self.bufsec)))
+        self.stream_bufsec = min(_MAX_PYLSL_STREAM_BUFSIZE, self.bufsec)
         self.stream_bufsize = 0 # to be calculated using sampling rate
         self.amp_serial = amp_serial
         self.eeg_only = eeg_only
@@ -209,7 +209,7 @@ class StreamReceiver:
         inlets_slaves = []
         for amp in amps:
             # data type of the 2nd argument (max_buflen) is int according to LSL C++ specification!
-            inlet = pylsl.StreamInlet(amp, max_buflen=self.stream_bufsec)
+            inlet = pylsl.StreamInlet(amp, max_buflen=int(math.ceil(self.stream_bufsec)))
             inlets_master.append(inlet)
             self.buffers.append([])
             self.timestamps.append([])
