@@ -366,6 +366,14 @@ class StreamReceiver:
         #self.winsize = int(window_size * self.sample_rate) + 1
         self.winsize = int(round(window_size * self.sample_rate)) + 1
 
+    def set_sample_rate(self, sample_rate):
+        """
+        Set sample rate (in Hz)
+        """
+        self.check_connect()
+        #self.winsize = int(window_size * self.sample_rate) + 1
+        self.sample_rate = sample_rate
+
     def get_channel_names(self):
         """
         Get a list of channels
